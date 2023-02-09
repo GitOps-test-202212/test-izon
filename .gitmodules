@@ -1,0 +1,3 @@
+[submodule "github_actions"]
+	path = github_actions
+	url = https://github.com/kizuna1921/github_actions.git
