@@ -2,9 +2,13 @@ name: Pluto
 
 on:
   workflow_call:
+    inputs:
+      fetch-depth:
+        required: true
+        type: integer
 #  push:
-    branches:
-      - main
+#    branches:
+#      - main
 #  pull_request:
 #    branches:
 #      - main
@@ -26,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: ${{ inputs.fetch-depth }}
       - name: Download Pluto
         uses: FairwindsOps/pluto/github-action@master
       - name: Use pluto
