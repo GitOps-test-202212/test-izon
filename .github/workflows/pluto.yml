@@ -3,8 +3,8 @@ name: Pluto
 on:
   workflow_call:
 #  push:
-#    branches:
-#      - main
+    branches:
+      - main
 #  pull_request:
 #    branches:
 #      - main
