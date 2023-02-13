@@ -1,0 +1,79 @@
+name: conftest
+
+on:
+#  workflow_call:
+  workflow_dispatch:
+    inputs:
+      conftest_policy_repository:
+        required: true
+        type: string
+        default: kizuna1921/conftest
+
+      conftest_policy_repository_ref:
+        required: true
+        type: string
+        default: main
+
+      conftest_policy_path:
+        required: true
+        type: string
+        default: Policy
+
+#    secrets:
+#      GH_PAT:
+#        required: true
+##        default: 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
+#        default: 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
+
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    branches: [ main ]
+#    paths:
+#      - 'policy/**'
+env:
+  CONFTEST_VERSION: 0.38.0
+jobs:
+  terraform:
+    name: fmt-all
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: clone conftest repository
+        uses: actions/checkout@v3
+        with: 
+          repository: ${{ inputs.conftest_policy_repository }}
+          ref: ${{ inputs.conftest_policy_repository_ref }}
+          path: Mypolicy
+          token: ${{ secrets.CONFTEST_KEY }}
+
+#      - name: mkdir policy
+#        run: mkdir policy
+
+#      - name: cd
+#        run: cd kizuna1921/
+#
+#      - name: ls
+#        run: ls kizuna1921/
+#
+#
+#      - name: copy policy directory
+#        run: cp -r kizuna1921/conftest/Policy/ policy/
+
+      - name: Install conftest
+        run: |
+          wget -O - 'https://github.com/open-policy-agent/conftest/releases/download/v${{ env.CONFTEST_VERSION }}/conftest_${{ env.CONFTEST_VERSION }}_Linux_x86_64.tar.gz' | tar zxvf -
+          ./conftest --version
+
+#      - name: conftest fmt
+#        run: |
+#          git add . && ./conftest fmt ./ && git diff --exit-code ./
+
+      - name: conftest verify
+        run: |
+          ./conftest test Pod2.yaml --policy Mypolicy/Policy/
