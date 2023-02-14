@@ -21,7 +21,7 @@ on:
 #        default: Policy
 
     secrets:
-      CONFTEST_KEY:
+      CONFTEST_PAT:
         required: true
 
 #  push:
@@ -49,7 +49,7 @@ jobs:
           repository: ${{ inputs.conftest_policy_repository }}
           ref: ${{ inputs.conftest_policy_repository_ref }}
           path: ${{ inputs.conftest_policy_path }}
-          token: ${{ secrets.CONFTEST_KEY }}
+          token: ${{ secrets.CONFTEST_PAT }}
 
 #      - name: mkdir policy
 #        run: mkdir policy
