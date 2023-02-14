@@ -28,7 +28,7 @@ jobs:
 ##      - name: Run Pluto
 ##        run: pluto detect-files -d . -o wide --target-versions k8s=v1.23.0 --ignore-deprecations --ignore-removals
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Download Pluto
