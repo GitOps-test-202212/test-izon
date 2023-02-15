@@ -75,4 +75,4 @@ jobs:
 
       - name: conftest verify
         run: |
-          ./conftest test Pod2.yaml --policy ${{ inputs.conftest_policy_path }}/Policy/
+          ./conftest test Pod.yaml --policy ${{ inputs.conftest_policy_path }}/Policy/
