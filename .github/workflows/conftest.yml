@@ -19,6 +19,9 @@ on:
         type: string
 #        default: Mypolicy
 #        default: Policy
+      conftest_test_file:
+        required: true
+        type: string
 
     secrets:
       CONFTEST_PAT:
@@ -75,5 +78,5 @@ jobs:
 
       - name: conftest verify
         run: |
-          ./conftest test Pod.yaml --policy ${{ inputs.conftest_policy_path }}/Policy/
+          ./conftest test ${{ inputs.conftest_test_file }} --policy ${{ inputs.conftest_policy_path }}/Policy/
 #          ./conftest verify -p ./ --policy ${{ inputs.conftest_policy_path }}/Policy/
