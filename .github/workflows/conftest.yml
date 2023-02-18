@@ -68,10 +68,10 @@ jobs:
 #      - name: copy policy directory
 #        run: cp -r kizuna1921/conftest/Policy/ policy/
 
-      - name: Install conftest
+      - name: make tmp directory
         run: |
-          wget -O - 'https://github.com/open-policy-agent/conftest/releases/download/v${{ env.CONFTEST_VERSION }}/conftest_${{ env.CONFTEST_VERSION }}_Linux_x86_64.tar.gz' | tar zxvf -
-          ./conftest --version
+          mkdir ./tmp
+
 
       - name: cp *.yaml to tmp
         run: |
@@ -82,6 +82,11 @@ jobs:
 #          git add . && ./conftest fmt ./ && git diff --exit-code ./
 
 #          for file in `\find $DIR -name '*.mp4'`; do
+
+      - name: Install conftest
+        run: |
+          wget -O - 'https://github.com/open-policy-agent/conftest/releases/download/v${{ env.CONFTEST_VERSION }}/conftest_${{ env.CONFTEST_VERSION }}_Linux_x86_64.tar.gz' | tar zxvf -
+          ./conftest --version
 
 
       - name: conftest test
