@@ -91,7 +91,7 @@ jobs:
 
       - name: conftest test
         run: |
-          for file in \find ./tmp/ -name '*.yaml'; do
+          for file in `\find ./tmp/ -name '*.yaml'`; do
           echo $file
           ./conftest test $file --policy ${{ inputs.conftest_policy_path }}/Policy/
           done
