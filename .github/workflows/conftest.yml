@@ -19,9 +19,10 @@ on:
         type: string
 #        default: Mypolicy
 #        default: Policy
-      test_file:
-        required: true
-        type: string
+
+#      test_file:
+#        required: true
+#        type: string
 
     secrets:
       CONFTEST_PAT:
@@ -38,7 +39,7 @@ env:
   CONFTEST_VERSION: 0.38.0
 jobs:
   terraform:
-    name: fmt-all
+    name: conftest
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -72,11 +73,21 @@ jobs:
           wget -O - 'https://github.com/open-policy-agent/conftest/releases/download/v${{ env.CONFTEST_VERSION }}/conftest_${{ env.CONFTEST_VERSION }}_Linux_x86_64.tar.gz' | tar zxvf -
           ./conftest --version
 
+      - name: cp *.yaml to tmp
+        run: |
+          find . -name "*.yaml" -exec cp {} ./tmp/ \;
+
 #      - name: conftest fmt
 #        run: |
 #          git add . && ./conftest fmt ./ && git diff --exit-code ./
 
-      - name: conftest verify
+#          for file in `\find $DIR -name '*.mp4'`; do
+
+
+      - name: conftest test
         run: |
-          ./conftest test ${{ inputs.test_file }} --policy ${{ inputs.conftest_policy_path }}/Policy/
+          for file in \find ./tmp/ -name '*.yaml'; do
+          echo $file
+          ./conftest test $file --policy ${{ inputs.conftest_policy_path }}/Policy/
+          done
 #          ./conftest verify -p ./ --policy ${{ inputs.conftest_policy_path }}/Policy/
