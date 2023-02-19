@@ -77,6 +77,10 @@ jobs:
         run: |
           find . -name "*.yaml" -exec cp {} ./tmp/ \;
 
+      - name: cp *.yml to tmp
+        run: |
+          find . -name "*.yml" -exec cp {} ./tmp/ \;
+
 #      - name: conftest fmt
 #        run: |
 #          git add . && ./conftest fmt ./ && git diff --exit-code ./
@@ -89,10 +93,21 @@ jobs:
           ./conftest --version
 
 
-      - name: conftest test
+      - name: conftest test yaml
         run: |
           for file in `\find ./tmp/ -name '*.yaml'`; do
           echo $file
           ./conftest test $file --policy ${{ inputs.conftest_policy_path }}/Policy/
           done
 #          ./conftest verify -p ./ --policy ${{ inputs.conftest_policy_path }}/Policy/
+
+      - name: conftest test yml
+        run: |
+          for file in `\find ./tmp/ -name '*.yml'`; do
+          echo $file
+          ./conftest test $file --policy ${{ inputs.conftest_policy_path }}/Policy/
+          done
+
+      - name: delete tmp directory
+        run: |
+          rm -rf ./tmp
