@@ -1,0 +1,53 @@
+name: Pluto helm
+
+on:
+  workflow_call:
+#    inputs:
+#      fetch-depth:
+#        required: true
+#        type: integer
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    branches:
+#      - main
+
+jobs:
+  pluto:
+    name: pluto
+    runs-on: ubuntu-latest
+    steps:
+#      - uses: actions/checkout@v2
+#      - name: Download Pluto
+#        uses: FairwindsOps/pluto/github-action@master
+#      - name: Use pluto
+#        run: |
+#          helm template . | pluto detect-files -d ./pkg/finder/testdata --target-versions version=v1.22.0 -
+#          pluto detect-files -d pkg/finder/testdata
+##      - name: Run Pluto
+##        run: pluto detect-files -d . -o wide --target-versions k8s=v1.23.0 --ignore-deprecations --ignore-removals
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: make tmp directory
+        run: |
+          mkdir ./tmp
+
+      - name: helm template to tmp directory
+        run: |
+          helm template . >> ./tmp/tmp.yaml
+
+      - name: Download Pluto
+        uses: FairwindsOps/pluto/github-action@master
+
+      - name: Use pluto
+        id: pluto
+        run: |
+          pluto detect-files -d .
+
+      - name: delete tmp directory
+        run: |
+          rm -rf ./tmp
