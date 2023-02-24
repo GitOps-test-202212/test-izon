@@ -1,0 +1,70 @@
+name: conftest
+
+on:
+  workflow_call:
+#  workflow_dispatch:
+    inputs:
+      conftest_policy_repository:
+        required: true
+        type: string
+#        default: kizuna1921/conftest
+
+      conftest_policy_repository_ref:
+        required: true
+        type: string
+#        default: main
+
+      conftest_policy_path:
+        required: true
+        type: string
+#        default: Mypolicy
+#        default: Policy
+
+#      test_file:
+#        required: true
+#        type: string
+
+    secrets:
+      CONFTEST_PAT:
+        required: true
+
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    branches: [ main ]
+#    paths:
+#      - 'policy/**'
+env:
+  CONFTEST_VERSION: 0.38.0
+jobs:
+  terraform:
+    name: conftest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: clone conftest repository
+        uses: actions/checkout@v3
+        with: 
+          repository: ${{ inputs.conftest_policy_repository }}
+          ref: ${{ inputs.conftest_policy_repository_ref }}
+          path: ${{ inputs.conftest_policy_path }}
+          token: ${{ secrets.CONFTEST_PAT }}
+
+      - name: Install conftest
+        run: |
+          wget -O - 'https://github.com/open-policy-agent/conftest/releases/download/v${{ env.CONFTEST_VERSION }}/conftest_${{ env.CONFTEST_VERSION }}_Linux_x86_64.tar.gz' | tar zxvf -
+          ./conftest --version
+
+
+      - name: conftest test yaml
+        run: |
+          ./conftest test Pod_test.yaml --policy ${{ inputs.conftest_policy_path }}/Policy/
+#          for file in `\find ./tmp/ -name '*.yaml'`; do
+#          echo $file
+#          ./conftest test $file --policy ${{ inputs.conftest_policy_path }}/Policy/
+#          done
