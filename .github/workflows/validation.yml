@@ -49,7 +49,7 @@ jobs:
           architecture: 'x64'
 
       - name: Get Python version
-          run: python -V
+        run: python -V
 
       - name: install yq
         run: |
