@@ -65,9 +65,9 @@ jobs:
 
       - name: change values.yaml 
         run: |
-          cd ${{ inputs.conftest_policy_path }}
-          yq -r .spec.source.helm.values ./sample-app/application.yaml > values.yaml
-          cat values.yaml
+          cd sample-app
+          yq -r .spec.source.helm.values application.yaml > ./${{ inputs.conftest_policy_path }}/values.yaml
+          cat ./${{ inputs.conftest_policy_path }}/values.yaml
 #
 #      - name: check values.yaml
 #        run: |
@@ -75,8 +75,8 @@ jobs:
 #
       - name: Helm template
         run: |
-          helm template ./${{ inputs.conftest_policy_path }} > ./${{ inputs.conftest_policy_path }}tmp.yaml
-          cat ./${{ inputs.conftest_policy_path }}tmp.yaml
+          helm template ./${{ inputs.conftest_policy_path }} > ./${{ inputs.conftest_policy_path }}/tmp.yaml
+          cat ./${{ inputs.conftest_policy_path }}/tmp.yaml
 
       - name: delete tmp directory
         run: |
