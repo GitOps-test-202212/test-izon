@@ -65,19 +65,17 @@ jobs:
 
       - name: change values.yaml 
         run: |
-          cd sample-app
-          yq -r .spec.source.helm.values application.yaml > ./${{ inputs.helm_path }}/values.yaml
-          cat ./${{ inputs.helm_path }}/values.yaml
+          ls
+          ls ./${{ inputs.helm_path }}
+#          cd sample-app
+#          yq -r .spec.source.helm.values application.yaml > ./${{ inputs.helm_path }}/values.yaml
+#          cat ./${{ inputs.helm_path }}/values.yaml
 #
-#      - name: check values.yaml
+#      - name: Helm template
 #        run: |
-#          cat ${{ inputs.helm_path }}/Policy/
+#          helm template ./${{ inputs.helm_path }} > ./${{ inputs.helm_path }}/tmp.yaml
+#          cat ./${{ inputs.helm_path }}/tmp.yaml
 #
-      - name: Helm template
-        run: |
-          helm template ./${{ inputs.helm_path }} > ./${{ inputs.helm_path }}/tmp.yaml
-          cat ./${{ inputs.helm_path }}/tmp.yaml
-
-      - name: delete tmp directory
-        run: |
-          rm -rf ./${{ inputs.helm_path }}
+#      - name: delete tmp directory
+#        run: |
+#          rm -rf ./${{ inputs.helm_path }}
