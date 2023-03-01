@@ -34,7 +34,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: clone conftest repository
+      - name: clone helm-chart repository
         uses: actions/checkout@v3
         with: 
           repository: ${{ inputs.helm_repository }}
@@ -66,18 +66,18 @@ jobs:
       - name: change values.yaml 
         run: |
           cd sample-app
-          yq -r .spec.source.helm.values application.yaml > ./${{ inputs.conftest_policy_path }}/values.yaml
-          cat ./${{ inputs.conftest_policy_path }}/values.yaml
+          yq -r .spec.source.helm.values application.yaml > ./${{ inputs.helm_path }}/values.yaml
+          cat ./${{ inputs.helm_path }}/values.yaml
 #
 #      - name: check values.yaml
 #        run: |
-#          cat ${{ inputs.conftest_policy_path }}/Policy/
+#          cat ${{ inputs.helm_path }}/Policy/
 #
       - name: Helm template
         run: |
-          helm template ./${{ inputs.conftest_policy_path }} > ./${{ inputs.conftest_policy_path }}/tmp.yaml
-          cat ./${{ inputs.conftest_policy_path }}/tmp.yaml
+          helm template ./${{ inputs.helm_path }} > ./${{ inputs.helm_path }}/tmp.yaml
+          cat ./${{ inputs.helm_path }}/tmp.yaml
 
       - name: delete tmp directory
         run: |
-          rm -rf ./${{ inputs.conftest_policy_path }}
+          rm -rf ./${{ inputs.helm_path }}
