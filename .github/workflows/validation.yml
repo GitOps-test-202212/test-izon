@@ -65,6 +65,7 @@ jobs:
 
       - name: change values.yaml 
         run: |
+          cd tmp
           ls
 #
 #      - name: check values.yaml
