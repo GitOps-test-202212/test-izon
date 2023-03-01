@@ -63,9 +63,9 @@ jobs:
           sudo apt-get install jq
           jq -V
 
-#      - name: change values.yaml 
-#        run: |
-#          find . -name "*.yaml" -exec cp {} ./tmp/ \;
+      - name: change values.yaml 
+        run: |
+          ls
 #
 #      - name: check values.yaml
 #        run: |
