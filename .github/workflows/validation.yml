@@ -66,8 +66,8 @@ jobs:
       - name: change values.yaml 
         run: |
           cd sample-app
-          yq -r .spec.source.helm.values application.yaml > ${{ inputs.helm_path }}/values.yaml
-          cat ${{ inputs.helm_path }}/values.yaml
+          yq -r .spec.source.helm.values application.yaml > ../${{ inputs.helm_path }}/values.yaml
+          cat ../${{ inputs.helm_path }}/values.yaml
 #
 #      - name: Helm template
 #        run: |
