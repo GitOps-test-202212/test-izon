@@ -66,7 +66,7 @@ jobs:
       - name: change values.yaml 
         run: |
           cd ${{ inputs.conftest_policy_path }}
-          yq -r .spec.source.helm.values application.yaml > values.yaml
+          yq -r .spec.source.helm.values ./sample-app/application.yaml > values.yaml
           cat values.yaml
 #
 #      - name: check values.yaml
