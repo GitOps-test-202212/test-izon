@@ -65,7 +65,6 @@ jobs:
 
       - name: change values.yaml 
         run: |
-          ls
           ls ./${{ inputs.helm_path }}
 #          cd sample-app
 #          yq -r .spec.source.helm.values application.yaml > ./${{ inputs.helm_path }}/values.yaml
