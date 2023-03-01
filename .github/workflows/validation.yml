@@ -71,7 +71,7 @@ jobs:
 
       - name: Helm template
         run: |
-          cat ../${{ inputs.helm_path }}
+          cd ../${{ inputs.helm_path }}
           helm template . > tmp.yaml
           cat tmp.yaml
 
