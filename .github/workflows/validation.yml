@@ -71,10 +71,10 @@ jobs:
 
       - name: Helm template
         run: |
-          cd ../${{ inputs.helm_path }}
+          cd ${{ inputs.helm_path }}
           helm template . > tmp.yaml
           cat tmp.yaml
 
       - name: delete tmp directory
         run: |
-          rm -rf ../${{ inputs.helm_path }}
+          rm -rf ${{ inputs.helm_path }}
